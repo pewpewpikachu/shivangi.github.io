@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shivangi — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #10121a;
+    --surface: #171a26;
+    --surface-2: #1e2233;
+    --line: #2a2e42;
+    --text: #ece9e2;
+    --muted: #8a8fa3;
+    --code: #7ce7c4;
+    --game: #f2a93b;
+    --three-d: #f2665c;
+  }
+  *{ box-sizing: border-box; margin:0; padding:0; }
+  html{ scroll-behavior: smooth; }
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+  h1,h2,h3, .mono{ font-family: 'JetBrains Mono', monospace; }
+  a{ color: inherit; text-decoration: none; }
+  ::selection{ background: var(--code); color: #0b0d13; }
+
+  /* ---- Tab bar nav ---- */
+  .tabbar{
+    position: fixed; top:0; left:0; right:0; z-index: 100;
+    display:flex; align-items:stretch;
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    backdrop-filter: blur(6px);
+  }
+  .tab-logo{
+    display:flex; align-items:center; gap:8px;
+    padding: 0 18px; font-size: 13px; font-weight:600; color: var(--muted);
+    border-right: 1px solid var(--line);
+  }
+  .tab-logo span{ color: var(--text); }
+  .tabs{ display:flex; overflow-x:auto; scrollbar-width:none; }
+  .tabs::-webkit-scrollbar{ display:none; }
+  .tab{
+    font-size: 12.5px; white-space:nowrap;
+    padding: 14px 18px; color: var(--muted);
+    border-right: 1px solid var(--line);
+    cursor:pointer; position:relative;
+    transition: color .2s ease;
+  }
+  .tab:hover{ color: var(--text); }
+  .tab.active{ color: var(--text); background: var(--bg); }
+  .tab .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:7px; }
+  .tab[data-accent="code"] .dot{ background: var(--code); }
+  .tab[data-accent="game"] .dot{ background: var(--game); }
+  .tab[data-accent="3d"] .dot{ background: var(--three-d); }
+  .tab[data-accent="base"] .dot{ background: var(--muted); }
+
+  section{ padding: 120px 8vw 80px; max-width: 1080px; margin: 0 auto; }
+
+  /* ---- Hero ---- */
+  .hero{ padding-top: 160px; min-height: 90vh; display:flex; flex-direction:column; justify-content:center; }
+  .hero .kicker{
+    color: var(--code); font-size: 13px; letter-spacing:.04em;
+    margin-bottom: 22px; display:flex; align-items:center; gap:10px;
+  }
+  .hero .kicker::before{ content:'>'; }
+  .cursor{ display:inline-block; width:9px; height:18px; background: var(--code); animation: blink 1.1s step-start infinite; }
+  @keyframes blink{ 50%{ opacity:0; } }
+  .hero h1{
+    font-size: clamp(34px, 6vw, 68px);
+    line-height: 1.12; font-weight:700; max-width: 900px;
+    letter-spacing: -0.01em;
+  }
+  .hero h1 .accent-code{ color: var(--code); }
+  .hero h1 .accent-game{ color: var(--game); }
+  .hero h1 .accent-3d{ color: var(--three-d); }
+  .hero p.sub{
+    margin-top: 26px; max-width: 560px; color: var(--muted); font-size: 16.5px;
+  }
+  .hero .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top: 36px; }
+  .chip{
+    font-family:'JetBrains Mono',monospace; font-size:12px;
+    border:1px solid var(--line); padding:7px 12px; border-radius:5px; color: var(--muted);
+  }
+
+  /* ---- Section headers ---- */
+  .sec-head{ display:flex; align-items:baseline; gap:14px; margin-bottom: 44px; }
+  .sec-num{ font-family:'JetBrains Mono',monospace; font-size:13px; color: var(--muted); }
+  .sec-head h2{ font-size: 26px; font-weight:600; }
+  .sec-line{ flex:1; height:1px; background: var(--line); }
+
+  /* ---- About ---- */
+  .about-grid{ display:grid; grid-template-columns: 1.3fr 1fr; gap: 50px; }
+  .about-grid p{ color: var(--muted); margin-bottom: 16px; font-size: 15.5px; }
+  .about-grid p .hl{ color: var(--text); }
+  .facts{ background: var(--surface); border:1px solid var(--line); border-radius:8px; padding: 22px; }
+  .facts .fact{ display:flex; justify-content:space-between; font-size:13.5px; padding: 10px 0; border-bottom:1px solid var(--line); }
+  .facts .fact:last-child{ border-bottom:none; }
+  .facts .fact .k{ color: var(--muted); }
+
+  /* ---- Skills ---- */
+  .skill-groups{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .skill-card{ background: var(--surface); border:1px solid var(--line); border-radius:8px; padding: 22px; }
+  .skill-card .label{ font-family:'JetBrains Mono',monospace; font-size:12px; display:flex; align-items:center; gap:8px; margin-bottom:16px; }
+  .skill-card .label .dot{ width:7px; height:7px; border-radius:50%; }
+  .skill-card[data-a="code"] .label .dot{ background: var(--code); }
+  .skill-card[data-a="game"] .label .dot{ background: var(--game); }
+  .skill-card[data-a="3d"] .label .dot{ background: var(--three-d); }
+  .skill-card ul{ list-style:none; }
+  .skill-card li{ font-size:13.5px; color: var(--muted); padding: 6px 0; }
+
+  /* ---- Project cards (editor window style) ---- */
+  .projects{ display:flex; flex-direction:column; gap: 22px; }
+  .project{
+    background: var(--surface); border:1px solid var(--line); border-radius:9px; overflow:hidden;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .project:hover{ transform: translateY(-2px); border-color: var(--accent, var(--line)); }
+  .project[data-a="code"]{ --accent: var(--code); }
+  .project[data-a="game"]{ --accent: var(--game); }
+  .project[data-a="3d"]{ --accent: var(--three-d); }
+  .win-bar{ display:flex; align-items:center; gap:8px; padding: 10px 16px; background: var(--surface-2); border-bottom:1px solid var(--line); }
+  .win-dot{ width:10px; height:10px; border-radius:50%; }
+  .win-dot:nth-child(1){ background:#f2665c; }
+  .win-dot:nth-child(2){ background:#f2a93b; }
+  .win-dot:nth-child(3){ background:#7ce7c4; }
+  .win-title{ margin-left:8px; font-family:'JetBrains Mono',monospace; font-size:12px; color: var(--muted); }
+  .project-body{ padding: 24px; display:grid; grid-template-columns: auto 1fr; gap: 22px; align-items:start; }
+  .glyph{
+    width:56px; height:56px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+    background: color-mix(in srgb, var(--accent) 15%, transparent);
+    color: var(--accent); font-family:'JetBrains Mono',monospace; font-weight:700; font-size:20px;
+    flex-shrink:0;
+  }
+  .project h3{ font-size:17px; margin-bottom:8px; }
+  .project .status{ font-family:'JetBrains Mono',monospace; font-size:10.5px; color: var(--accent); border:1px solid var(--accent); border-radius:20px; padding:2px 9px; margin-left:10px; vertical-align: middle; }
+  .project p{ color: var(--muted); font-size:14.5px; margin-bottom: 12px; }
+  .project .tags{ display:flex; flex-wrap:wrap; gap:8px; }
+  .project .tags span{ font-family:'JetBrains Mono',monospace; font-size:11px; color: var(--muted); border:1px solid var(--line); padding:3px 9px; border-radius:4px; }
+  .placeholder-note{ font-size:12.5px; color: var(--muted); font-style: italic; margin-top:10px; }
+
+  /* ---- Resume / education ---- */
+  .resume-block{ background: var(--surface); border:1px solid var(--line); border-radius:9px; padding: 30px; }
+  .resume-block h3{ font-size:16px; margin-bottom: 4px; }
+  .resume-block .school{ color: var(--muted); font-size:13.5px; margin-bottom: 20px; }
+  .course-tags{ display:flex; flex-wrap:wrap; gap:9px; }
+  .course-tags span{ font-family:'JetBrains Mono',monospace; font-size:12px; padding:6px 11px; border-radius:5px; background: var(--surface-2); color: var(--text); }
+  .btn-row{ margin-top:26px; display:flex; gap:12px; }
+  .btn{ font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 20px; border-radius:6px; border:1px solid var(--line); color: var(--muted); cursor:pointer; }
+  .btn.primary{ background: var(--code); color:#0b0d13; border-color: var(--code); font-weight:600; }
+
+  /* ---- Contact / footer ---- */
+  footer{ padding: 70px 8vw 50px; max-width:1080px; margin:0 auto; }
+  footer h2{ font-size: 26px; margin-bottom: 16px; }
+  footer p{ color: var(--muted); max-width: 480px; margin-bottom: 26px; }
+  .contact-links{ display:flex; gap:14px; flex-wrap:wrap; }
+  .contact-links a{
+    font-family:'JetBrains Mono',monospace; font-size:13px; border:1px solid var(--line);
+    padding: 10px 18px; border-radius: 6px; color: var(--text);
+  }
+  .contact-links a:hover{ border-color: var(--code); color: var(--code); }
+  .foot-line{ margin-top: 50px; padding-top: 20px; border-top:1px solid var(--line); font-size:12px; color: var(--muted); display:flex; justify-content:space-between; }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:none; }
+
+  @media (max-width: 760px){
+    .about-grid, .skill-groups{ grid-template-columns: 1fr; }
+    .project-body{ grid-template-columns: 1fr; }
+    section{ padding: 100px 6vw 60px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="tabbar">
+  <div class="tab-logo">S<span>/</span>portfolio</div>
+  <div class="tabs">
+    <div class="tab active" data-accent="base" data-target="hero"><span class="dot"></span>about.md</div>
+    <div class="tab" data-accent="code" data-target="code"><span class="dot"></span>code.js</div>
+    <div class="tab" data-accent="game" data-target="game"><span class="dot"></span>game.gml</div>
+    <div class="tab" data-accent="3d" data-target="threed"><span class="dot"></span>render.blend</div>
+    <div class="tab" data-accent="base" data-target="resume"><span class="dot"></span>resume.pdf</div>
+    <div class="tab" data-accent="base" data-target="contact"><span class="dot"></span>contact.sh</div>
+  </div>
+</nav>
+
+<section class="hero" id="hero">
+  <div class="kicker">shivangi@portfolio: ~ <span class="cursor"></span></div>
+  <h1>First-year BCA student, building <span class="accent-code">across code</span>, <span class="accent-game">game worlds</span>, and <span class="accent-3d">3D scenes</span>.</h1>
+  <p class="sub">I like figuring out how things work by making them — a website, a level, a shaded object in a viewport. This is a running log of what I'm building at Amity University and beyond.</p>
+  <div class="chips">
+    <div class="chip">Data Structures</div>
+    <div class="chip">Operating Systems</div>
+    <div class="chip">Software Engineering</div>
+    <div class="chip">GameMaker</div>
+    <div class="chip">Blender</div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="sec-head"><span class="sec-num">01</span><h2>About</h2><div class="sec-line"></div></div>
+  <div class="about-grid reveal">
+    <div>
+      <p><span class="hl">I'm Shivangi</span>, a first-year BCA student — currently working through Data Structures, Operating Systems, Software Engineering, Environmental Studies, and Psychology.</p>
+      <p>Outside of coursework, I keep three side-tracks going at once: writing code, building a 2D game, and slowly learning my way around Blender. [Add a line or two here about what drew you to each — the story behind the tabs above.]</p>
+      <p>[This is a placeholder paragraph — replace with a couple of sentences about what you're currently focused on, or what you want to build next.]</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><span class="k">Studying</span><span>BCA, 1st Year</span></div>
+      <div class="fact"><span class="k">University</span><span>Amity University</span></div>
+      <div class="fact"><span class="k">Building</span><span>Web · Games · 3D</span></div>
+      <div class="fact"><span class="k">Based in</span><span>[Your City]</span></div>
+      <div class="fact"><span class="k">Status</span><span>Open to [internships / collab]</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="sec-head"><span class="sec-num">02</span><h2>Toolkit</h2><div class="sec-line"></div></div>
+  <div class="skill-groups reveal">
+    <div class="skill-card" data-a="code">
+      <div class="label"><span class="dot"></span>CODE</div>
+      <ul>
+        <li>HTML / CSS / JS</li>
+        <li>C (structs, pointers, memory)</li>
+        <li>Data structures &amp; algorithms</li>
+        <li>[Add: Python, Java, etc.]</li>
+      </ul>
+    </div>
+    <div class="skill-card" data-a="game">
+      <div class="label"><span class="dot"></span>GAME DEV</div>
+      <ul>
+        <li>GameMaker (GML)</li>
+        <li>2D game design basics</li>
+        <li>Sprites &amp; level logic</li>
+        <li>[Add more as you learn]</li>
+      </ul>
+    </div>
+    <div class="skill-card" data-a="3d">
+      <div class="label"><span class="dot"></span>3D ART</div>
+      <ul>
+        <li>Blender — viewport shading</li>
+        <li>Object selection &amp; manipulation</li>
+        <li>Keyframes / basic animation</li>
+        <li>[Add more as you learn]</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="code">
+  <div class="sec-head"><span class="sec-num">03</span><h2>Code &amp; Web</h2><div class="sec-line"></div></div>
+  <div class="projects reveal">
+    <div class="project" data-a="code">
+      <div class="win-bar"><span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span><span class="win-title">school-website</span></div>
+      <div class="project-body">
+        <div class="glyph">&lt;/&gt;</div>
+        <div>
+          <h3>Local School Website <span class="status">shipped</span></h3>
+          <p>Designed and built a website for a local school. [Add: what pages it had, what tools you used, and a link if it's live.]</p>
+          <div class="tags"><span>HTML/CSS</span><span>[Add stack]</span></div>
+          <p class="placeholder-note">Placeholder — add screenshots, a live link, or repo here.</p>
+        </div>
+      </div>
+    </div>
+    <div class="project" data-a="code">
+      <div class="win-bar"><span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span><span class="win-title">project-two</span></div>
+      <div class="project-body">
+        <div class="glyph">&lt;/&gt;</div>
+        <div>
+          <h3>[Project Name] <span class="status">in progress</span></h3>
+          <p>[Describe another coding project — a class assignment, a personal build, or something you want to start.]</p>
+          <div class="tags"><span>[Language]</span><span>[Framework]</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="game">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Game Dev</h2><div class="sec-line"></div></div>
+  <div class="projects reveal">
+    <div class="project" data-a="game">
+      <div class="win-bar"><span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span><span class="win-title">2d-game.gmx</span></div>
+      <div class="project-body">
+        <div class="glyph">▶</div>
+        <div>
+          <h3>2D Game <span class="status">building</span></h3>
+          <p>A 2D game built in GameMaker. [Add: the concept, mechanics, what genre it is, and a gif or screenshot when you have one.]</p>
+          <div class="tags"><span>GameMaker</span><span>GML</span><span>2D</span></div>
+          <p class="placeholder-note">Placeholder — add gameplay clips or a devlog entry here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="threed">
+  <div class="sec-head"><span class="sec-num">05</span><h2>3D Art</h2><div class="sec-line"></div></div>
+  <div class="projects reveal">
+    <div class="project" data-a="3d">
+      <div class="win-bar"><span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span><span class="win-title">learning-blender</span></div>
+      <div class="project-body">
+        <div class="glyph">◆</div>
+        <div>
+          <h3>Blender Studies <span class="status">learning</span></h3>
+          <p>Getting comfortable in Blender — viewport shading, object selection, and keyframing. [Add your first render or animation once you have one worth showing.]</p>
+          <div class="tags"><span>Blender</span><span>Viewport shading</span><span>Keyframes</span></div>
+          <p class="placeholder-note">Placeholder — swap in a render, wireframe shot, or short clip.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resume">
+  <div class="sec-head"><span class="sec-num">06</span><h2>Education</h2><div class="sec-line"></div></div>
+  <div class="resume-block reveal">
+    <h3>Bachelor of Computer Applications (BCA)</h3>
+    <div class="school">Amity University · 1st Year</div>
+    <div class="course-tags">
+      <span>Data Structures</span>
+      <span>Operating Systems</span>
+      <span>Software Engineering</span>
+      <span>Environmental Studies</span>
+      <span>Psychology</span>
+    </div>
+    <div class="btn-row">
+      <a class="btn primary" href="#">Download Resume</a>
+      <a class="btn" href="#">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Let's talk</h2><div class="sec-line"></div></div>
+  <p>Open to internships, collaborations, or just talking about code, games, and 3D art. Reach out through any of these.</p>
+  <div class="contact-links">
+    <a href="mailto:you@example.com">email</a>
+    <a href="#">github</a>
+    <a href="#">linkedin</a>
+    <a href="#">itch.io</a>
+  </div>
+  <div class="foot-line">
+    <span>Shivangi — built with HTML/CSS/JS</span>
+    <span id="year"></span>
+  </div>
+</footer>
+
+<script>
+  // tab nav + active state on scroll
+  const tabs = document.querySelectorAll('.tab');
+  const sections = ['hero','code','game','threed','resume','contact'].map(id => document.getElementById(id));
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = document.getElementById(tab.dataset.target);
+      if(target) target.scrollIntoView({behavior:'smooth'});
+    });
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+      }
+    });
+  }, {threshold: 0.15});
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        tabs.forEach(t => t.classList.remove('active'));
+        const match = document.querySelector(`.tab[data-target="${entry.target.id}"]`);
+        if(match) match.classList.add('active');
+      }
+    });
+  }, {threshold: 0.5, rootMargin: '-80px 0px -50% 0px'});
+  sections.forEach(s => s && navObserver.observe(s));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
