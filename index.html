@@ -147,6 +147,24 @@
   .project .tags span{ font-family:'JetBrains Mono',monospace; font-size:11px; color: var(--muted); border:1px solid var(--line); padding:3px 9px; border-radius:4px; }
   .placeholder-note{ font-size:12.5px; color: var(--muted); font-style: italic; margin-top:10px; }
 
+  /* ---- Video demo (game section) ---- */
+  .project-body.has-video{ grid-template-columns: 1fr; }
+  .project-body.has-video .video-row{ display:grid; grid-template-columns: auto 1fr; gap: 22px; align-items:start; }
+  .demo-video-wrap{
+    margin-top: 18px; border: 1px solid var(--line); border-radius: 8px;
+    overflow: hidden; background: #000;
+  }
+  .demo-video-wrap video{
+    display:block; width: 100%; max-height: 480px; background:#000;
+  }
+  .demo-caption{
+    display:flex; justify-content:space-between; align-items:center;
+    padding: 9px 14px; background: var(--surface-2); border-top: 1px solid var(--line);
+    font-family:'JetBrains Mono',monospace; font-size: 11px; color: var(--muted);
+  }
+  .demo-caption .rec{ display:flex; align-items:center; gap:7px; color: var(--game); }
+  .demo-caption .rec .rec-dot{ width:7px; height:7px; border-radius:50%; background: var(--game); }
+
   /* ---- Resume / education ---- */
   .resume-block{ background: var(--surface); border:1px solid var(--line); border-radius:9px; padding: 30px; }
   .resume-block h3{ font-size:16px; margin-bottom: 4px; }
@@ -175,7 +193,7 @@
 
   @media (max-width: 760px){
     .about-grid, .skill-groups{ grid-template-columns: 1fr; }
-    .project-body{ grid-template-columns: 1fr; }
+    .project-body, .project-body.has-video .video-row{ grid-template-columns: 1fr; }
     section{ padding: 100px 6vw 60px; }
   }
   @media (prefers-reduced-motion: reduce){
@@ -295,13 +313,24 @@
   <div class="projects reveal">
     <div class="project" data-a="game">
       <div class="win-bar"><span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span><span class="win-title">2d-game.gmx</span></div>
-      <div class="project-body">
-        <div class="glyph">▶</div>
-        <div>
-          <h3>2D Game <span class="status">building</span></h3>
-          <p>A 2D game built in GameMaker. [Add: the concept, mechanics, what genre it is, and a gif or screenshot when you have one.]</p>
-          <div class="tags"><span>GameMaker</span><span>GML</span><span>2D</span></div>
-          <p class="placeholder-note">Placeholder — add gameplay clips or a devlog entry here.</p>
+      <div class="project-body has-video">
+        <div class="video-row">
+          <div class="glyph">▶</div>
+          <div>
+            <h3>2D Game <span class="status">building</span></h3>
+            <p>A 2D game built in GameMaker. [Add: the concept, mechanics, what genre it is.] Screen recording below shows it in action.</p>
+            <div class="tags"><span>GameMaker</span><span>GML</span><span>2D</span></div>
+          </div>
+        </div>
+        <div class="demo-video-wrap">
+          <video controls preload="metadata" poster="">
+            <source src="game-demo.mp4" type="video/mp4">
+            Your browser doesn't support embedded video. <a href="game-demo.mp4">Download the clip</a> instead.
+          </video>
+          <div class="demo-caption">
+            <span class="rec"><span class="rec-dot"></span>gameplay-demo.mp4</span>
+            <span>[Add a one-line note about what this clip shows]</span>
+          </div>
         </div>
       </div>
     </div>
