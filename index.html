@@ -54,6 +54,7 @@
     border-right: 1px solid var(--line);
     cursor:pointer; position:relative;
     transition: color .2s ease;
+    background: none; border-top: none; border-bottom: none; border-left: none;
   }
   .tab:hover{ color: var(--text); }
   .tab.active{ color: var(--text); background: var(--bg); }
@@ -145,25 +146,26 @@
   .project p{ color: var(--muted); font-size:14.5px; margin-bottom: 12px; }
   .project .tags{ display:flex; flex-wrap:wrap; gap:8px; }
   .project .tags span{ font-family:'JetBrains Mono',monospace; font-size:11px; color: var(--muted); border:1px solid var(--line); padding:3px 9px; border-radius:4px; }
-  .placeholder-note{ font-size:12.5px; color: var(--muted); font-style: italic; margin-top:10px; }
 
-  /* ---- Video demo (game section) ---- */
-  .project-body.has-video{ grid-template-columns: 1fr; }
-  .project-body.has-video .video-row{ display:grid; grid-template-columns: auto 1fr; gap: 22px; align-items:start; }
-  .demo-video-wrap{
-    margin-top: 18px; border: 1px solid var(--line); border-radius: 8px;
-    overflow: hidden; background: #000;
+  /* ---- Game media (screenshots) ---- */
+  .game-media{
+    margin-top: 18px; display:grid; grid-template-columns: 1fr 1fr; gap: 16px;
   }
-  .demo-video-wrap video{
-    display:block; width: 100%; max-height: 480px; background:#000;
+  .media-card{
+    border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #000;
   }
-  .demo-caption{
-    display:flex; justify-content:space-between; align-items:center;
+  .media-card img{
+    display:block; width: 100%; height: 220px; object-fit: cover; object-position: top;
+  }
+  .media-caption{
     padding: 9px 14px; background: var(--surface-2); border-top: 1px solid var(--line);
     font-family:'JetBrains Mono',monospace; font-size: 11px; color: var(--muted);
+    display:flex; align-items:center; gap:7px;
   }
-  .demo-caption .rec{ display:flex; align-items:center; gap:7px; color: var(--game); }
-  .demo-caption .rec .rec-dot{ width:7px; height:7px; border-radius:50%; background: var(--game); }
+  .media-caption .rec-dot{ width:7px; height:7px; border-radius:50%; background: var(--game); flex-shrink:0; }
+  @media (max-width: 620px){
+    .game-media{ grid-template-columns: 1fr; }
+  }
 
   /* ---- Resume / education ---- */
   .resume-block{ background: var(--surface); border:1px solid var(--line); border-radius:9px; padding: 30px; }
@@ -172,7 +174,7 @@
   .course-tags{ display:flex; flex-wrap:wrap; gap:9px; }
   .course-tags span{ font-family:'JetBrains Mono',monospace; font-size:12px; padding:6px 11px; border-radius:5px; background: var(--surface-2); color: var(--text); }
   .btn-row{ margin-top:26px; display:flex; gap:12px; }
-  .btn{ font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 20px; border-radius:6px; border:1px solid var(--line); color: var(--muted); cursor:pointer; }
+  .btn{ font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 20px; border-radius:6px; border:1px solid var(--line); color: var(--muted); cursor:pointer; background:none; }
   .btn.primary{ background: var(--code); color:#0b0d13; border-color: var(--code); font-weight:600; }
 
   /* ---- Contact / footer ---- */
@@ -206,12 +208,12 @@
 <nav class="tabbar">
   <div class="tab-logo">S<span>/</span>portfolio</div>
   <div class="tabs">
-    <div class="tab active" data-accent="base" data-target="hero"><span class="dot"></span>about.md</div>
-    <div class="tab" data-accent="code" data-target="code"><span class="dot"></span>code.js</div>
-    <div class="tab" data-accent="game" data-target="game"><span class="dot"></span>game.gml</div>
-    <div class="tab" data-accent="3d" data-target="threed"><span class="dot"></span>render.blend</div>
-    <div class="tab" data-accent="base" data-target="resume"><span class="dot"></span>resume.pdf</div>
-    <div class="tab" data-accent="base" data-target="contact"><span class="dot"></span>contact.sh</div>
+    <button class="tab active" data-accent="base" data-target="hero"><span class="dot"></span>about.md</button>
+    <button class="tab" data-accent="code" data-target="code"><span class="dot"></span>code.js</button>
+    <button class="tab" data-accent="game" data-target="game"><span class="dot"></span>game.gml</button>
+    <button class="tab" data-accent="3d" data-target="threed"><span class="dot"></span>render.blend</button>
+    <button class="tab" data-accent="base" data-target="resume"><span class="dot"></span>resume.pdf</button>
+    <button class="tab" data-accent="base" data-target="contact"><span class="dot"></span>contact.sh</button>
   </div>
 </nav>
 
@@ -232,16 +234,15 @@
   <div class="sec-head"><span class="sec-num">01</span><h2>About</h2><div class="sec-line"></div></div>
   <div class="about-grid reveal">
     <div>
-      <p><span class="hl">I'm Shivangi</span>, BCA student — currently working through Data Structures, Database Management system, Operating Systems, Software Engineering, Environmental Studies, and Psychology.</p>
+      <p><span class="hl">I'm Shivangi</span>, a first-year BCA student — currently working through Data Structures, Database Management Systems, Operating Systems, Software Engineering, Environmental Studies, and Psychology.</p>
       <p>Outside of coursework, I keep three side-tracks going at once: writing code, building a 2D game, and slowly learning my way around Blender.</p>
-      <p></p>
     </div>
     <div class="facts">
       <div class="fact"><span class="k">Studying</span><span>BCA, 1st Year</span></div>
       <div class="fact"><span class="k">University</span><span>Amity University</span></div>
       <div class="fact"><span class="k">Building</span><span>Web · Games · 3D</span></div>
       <div class="fact"><span class="k">Based in</span><span>Noida, India</span></div>
-      <div class="fact"><span class="k">Status</span><span>Open to [internships / collab]</span></div>
+      <div class="fact"><span class="k">Status</span><span>Open to internships / collab</span></div>
     </div>
   </div>
 </section>
@@ -254,8 +255,8 @@
       <ul>
         <li>HTML / CSS / JS</li>
         <li>C (structs, pointers, memory)</li>
+        <li>Java</li>
         <li>Data structures &amp; algorithms</li>
-        <li> C, Java</li>
       </ul>
     </div>
     <div class="skill-card" data-a="game">
@@ -264,7 +265,6 @@
         <li>GameMaker (GML)</li>
         <li>2D game design basics</li>
         <li>Sprites &amp; level logic</li>
-        <li></li>
       </ul>
     </div>
     <div class="skill-card" data-a="3d">
@@ -273,7 +273,6 @@
         <li>Blender — viewport shading</li>
         <li>Object selection &amp; manipulation</li>
         <li>Keyframes / basic animation</li>
-        <li></li>
       </ul>
     </div>
   </div>
@@ -288,20 +287,8 @@
         <div class="glyph">&lt;/&gt;</div>
         <div>
           <h3>Local School Website <span class="status">shipped</span></h3>
-          <p>Designed and built a website for a local school. </p>
-          <div class="tags"><span>HTML/CSS</span><span></span></div>
-          <p class="placeholder-note"></p>
-        </div>
-      </div>
-    </div>
-    <div class="project" data-a="code">
-      <div class="win-bar"><span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span><span class="win-title">project-two</span></div>
-      <div class="project-body">
-        <div class="glyph">&lt;/&gt;</div>
-        <div>
-          <h3><span class="status"></span></h3>
-          <p></p>
-          <div class="tags"><span></span><span></span></div>
+          <p>Designed and built a website for a local school.</p>
+          <div class="tags"><span>HTML</span><span>CSS</span></div>
         </div>
       </div>
     </div>
@@ -313,23 +300,21 @@
   <div class="projects reveal">
     <div class="project" data-a="game">
       <div class="win-bar"><span class="win-dot"></span><span class="win-dot"></span><span class="win-dot"></span><span class="win-title">2d-game.gmx</span></div>
-      <div class="project-body has-video">
-        <div class="video-row">
-          <div class="glyph">▶</div>
-          <div>
-            <h3>2D Game <span class="status">building</span></h3>
-            <p>A 2D game built in GameMaker. Screen recording below shows it in action.</p>
-            <div class="tags"><span>GameMaker</span><span>GML</span><span>2D</span></div>
-          </div>
-        </div>
-        <div class="demo-video-wrap">
-          <video controls preload="metadata" poster="">
-            <source src="game-demo.mp4" type="video/mp4">
-            Your browser doesn't support embedded video. <a href="game-demo.mp4">Download the clip</a> instead.
-          </video>
-          <div class="demo-caption">
-            <span class="rec"><span class="rec-dot"></span>gameplay-demo.mp4</span>
-           // <span>[Add a one-line note about what this clip shows]</span>
+      <div class="project-body">
+        <div class="glyph">▶</div>
+        <div>
+          <h3>2D Game <span class="status">building</span></h3>
+          <p>A 2D game built in GameMaker — a snowy scene where a fox character dodges bombs and collects cherries, with movement and spawning logic scripted in GML.</p>
+          <div class="tags"><span>GameMaker</span><span>GML</span><span>2D</span></div>
+          <div class="game-media">
+            <div class="media-card">
+              <img src="assets/game-gameplay.png" alt="Gameplay screenshot: a fox character in a snowy 2D scene with falling snow, bombs, and cherries scattered across the ground">
+              <div class="media-caption"><span class="rec-dot"></span>in-game — fox, bombs &amp; cherries on the snow level</div>
+            </div>
+            <div class="media-card">
+              <img src="assets/game-code-editor.png" alt="GameMaker Studio editor screenshot showing GML step-event code controlling the fox's movement and screen wrapping">
+              <div class="media-caption"><span class="rec-dot"></span>GML — movement, keyboard input &amp; screen wrap logic</div>
+            </div>
           </div>
         </div>
       </div>
@@ -346,7 +331,7 @@
         <div class="glyph">◆</div>
         <div>
           <h3>Blender Studies <span class="status">learning</span></h3>
-          <p>Getting comfortable in Blender — viewport shading, object selection, and keyframing. </p>
+          <p>Getting comfortable in Blender — viewport shading, object selection, and keyframing.</p>
           <div class="tags"><span>Blender</span><span>Viewport shading</span><span>Keyframes</span></div>
         </div>
       </div>
@@ -366,10 +351,6 @@
       <span>Environmental Studies</span>
       <span>Psychology</span>
     </div>
-    <div class="btn-row">
-      <a class="btn primary" href="#">Download Resume</a>
-      <a class="btn" href="#">View on GitHub</a>
-    </div>
   </div>
 </section>
 
@@ -377,10 +358,8 @@
   <div class="sec-head"><span class="sec-num">07</span><h2>Let's talk</h2><div class="sec-line"></div></div>
   <p>Open to internships, collaborations, or just talking about code, games, and 3D art. Reach out through any of these.</p>
   <div class="contact-links">
-    <a href="pixiedigiartisan@gmail.com">email</a>
-    <a href="#">github</a>
-    <a href="www.linkedin.com/in/pixiesan">linkedin</a>
-    //<a href="#">itch.io</a>
+    <a href="mailto:pixiedigiartisan@gmail.com">email</a>
+    <a href="https://www.linkedin.com/in/pixiesan" target="_blank" rel="noopener">linkedin</a>
   </div>
   <div class="foot-line">
     <span>Shivangi — built with HTML/CSS/JS</span>
